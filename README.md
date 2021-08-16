@@ -36,14 +36,24 @@ Storing data works exactly like a normal python dictionary.
 ```python
 settings['a key'] = 'a value'
 ```
-
+\
 Once you are done you can save the QJSON object to the previus path with the following command:
 
 ```python
 settings.save()
 ```
 \
-Both ```.save()``` and ```.load()``` will automatically check if the given json file is present. They will generate any missing directories and files if necessary and return an empty dictionary if file is not found or corrupt. 
+You can also clear move or copy the JSON file by invoking one of the following functions:
+```python
+settings.copy_save('new/directory/for/json.json')
+settings.merge_save('new/directory/for/json.json')
+settings.clear_save()
+```
+The functions do not modify the content of the dictionary itself, but modify the to file saved content, so make sure to save before copying or moving anything.
+``.clear_save`` will also remove any empty folders left behind
+
+\
+ ```.save()```, ```.load()```, ```.move_save()``` and ```.copy_save``` will automatically check if any given directory is valid. They will generate any missing directories and files if necessary and return an empty dictionary if file is not found or corrupt. 
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

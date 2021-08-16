@@ -1,11 +1,35 @@
 import json
 import os
+import shutil
 
 class QJSON(dict):
 
     def __init__(self, path, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.path: str = path
+
+    def move_save(self, new_path):
+        self.copy_save(new_path)
+        self.clear_save()
+        self.path = new_path
+
+    def copy_save(self, new_path):
+        assert not self.path == new_path
+        self._check_file(new_path)
+        self._check_file(self.path)
+        shutil.copy(self.path,new_path)
+
+    def clear_save(self):
+        a = self.path.split(os.sep)
+        if self.path[0] == os.sep:
+            a[0] = os.sep + a[0]
+        os.remove(self.path)
+        for i in range(1, len(a)):
+            try:
+                os.rmdir(os.sep.join(a[:-i]))
+            except Exception:
+                pass
+
 
     def load(self, no_override=False):
         self._check_file()
@@ -33,18 +57,26 @@ class QJSON(dict):
         f.write(json.dumps(self, indent=2))
         f.close()
 
-    def _check_file(self):
-        p = self.path.split('/')
-        if self.path[0] == '/':
-            p[0] = '/' + p[0]
+    def _check_file(self, path=None):
+        if path is None:
+            path = self.path
+
+        p = path.split(os.sep)
+        if path[0] == os.sep:
+            p[0] = os.sep + p[0]
 
         for i in range(len(p) - 1):
             i += 1
-            if not os.path.isdir('/'.join(p[:i])):
-                print('/'.join(p[:i]))
-                os.mkdir('/'.join(p[:i]))
+            if not os.path.isdir(os.sep.join(p[:i])):
+                os.mkdir(os.sep.join(p[:i]))
 
-        if not os.path.isfile(self.path):
-            f = open(self.path, 'w')
+        if not os.path.isfile(path):
+            f = open(path, 'w')
             f.write('{}')
             f.close()
+
+if __name__ == '__main__':
+    s = QJSON('/home/nicky/PycharmProjects/QuickJSON/src/QuickJSON/path/to/json.json')
+    s['hello'] = 'there'
+    s.save()
+    s.move_save('/home/nicky/PycharmProjects/QuickJSON/src/QuickJSON/path/from/json.json')
