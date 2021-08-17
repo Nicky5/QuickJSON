@@ -50,7 +50,7 @@ settings.merge_save('new/directory/for/json.json')
 settings.clear_save()
 ```
 The functions do not modify the content of the dictionary itself, but modify the to file saved content, so make sure to save before copying or moving anything.
-``.clear_save`` will also remove any empty folders left behind
+``.clear_save`` and ```.move_save``` will also remove any empty folders left behind
 
 \
  ```.save()```, ```.load()```, ```.move_save()``` and ```.copy_save``` will automatically check if any given directory is valid. They will generate any missing directories and files if necessary and return an empty dictionary if file is not found or corrupt. 
