@@ -1,6 +1,6 @@
 # QuickJSON
 
-QuickJSON is a library that focuses on removing the ```open(file, 'w')``` hassle from your daily json file saving needs
+[QuickJSON](https://pypi.org/project/QuickJSON-nicky/) is a python library that focuses on removing the ```open(file, 'w')``` hassle from your daily json file saving needs
 
 ## Installation
 
