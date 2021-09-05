@@ -74,9 +74,3 @@ class QJSON(dict):
             f = open(path, 'w')
             f.write('{}')
             f.close()
-
-if __name__ == '__main__':
-    s = QJSON('/home/nicky/PycharmProjects/QuickJSON/src/QuickJSON/path/to/json.json')
-    s['hello'] = 'there'
-    s.save()
-    s.move_save('/home/nicky/PycharmProjects/QuickJSON/src/QuickJSON/path/from/json.json')
