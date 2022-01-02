@@ -38,10 +38,8 @@ class QJSON(dict):
             j = json.loads(f.read())
             f.close()
         except json.decoder.JSONDecodeError:
-            f = open(self.path, 'w')
-            f.write('{}')
-            f.close()
-        finally:
+            raise Exception("there was an error opening " + self.path + "\n")
+        else:
             f = open(self.path, 'r')
             j = json.loads(f.read())
             f.close()
@@ -74,3 +72,6 @@ class QJSON(dict):
             f = open(path, 'w')
             f.write('{}')
             f.close()
+
+h = QJSON("test.json")
+h.load()
